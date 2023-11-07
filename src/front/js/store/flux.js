@@ -1,52 +1,77 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			backendURL: process.env.BACKEND_URL,
+			token: null,
+
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
+			login: async (email, password) => {
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+				let options = {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json',
+						"Authorization": "Bearer " + store.token
+						// 'Authorization': 'Bearer your-access-token'
+
+					},
+					body: JSON.stringify({ email: email, password: password })
 				}
+				try {
+					const response = await fetch("https://laughing-telegram-jxp455g57xv3jgx9-3001.app.github.dev/api/token", options)
+					if (response.status !== 200) {
+						alert("error response code", response.status)
+						return false;
+					}
+					const data = await response.json()
+					console.log("access token", data);
+					sessionStorage.setItem("token", data.access_token);
+					setStore({
+						token: data.access_token
+					})
+					return true;
+
+				}
+				catch (error) {
+					console.log("login error try again")
+				}
+
+				// fetch(store.backendURL + "/api/login", options)
+				// 	.then(response => response.json())
+				// 	.then(data => {
+				// 		sessionStorage.setItem("accessToken", data.access_token)
+				// 		console.log(data.access_token)
+				// 	})
+				// 	.catch(error=>console.log(error))
+
+
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+			signup: (email, password) => {
+				let store = getStore()
+				let options = {
+					method: "POST",
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ "email": email, "password": password })
+				}
+				fetch(store.backendURL + "/api/signup", options)
+					.then(response => response.json())
+					.then(data => {
+						console.log(data)
+						return true
+					}
+					)
+					.catch(error => console.log(error))
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			},
+			logout: () => {
+
+			},
+
+
 		}
 	};
 };
