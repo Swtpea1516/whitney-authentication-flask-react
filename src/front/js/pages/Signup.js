@@ -25,7 +25,7 @@ export const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="signupPage">
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
