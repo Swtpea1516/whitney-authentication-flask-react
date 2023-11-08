@@ -38,6 +38,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
+			signup: async (formData)=>{
+				try{
+					let response = await fetch(getStore().backendURL+"/api/signup",{
+						method:"POST",
+						headers:{"Content-Type":"application/json"},
+						body: JSON.stringify({"email":formData.email,"password":formData.password})
+					})
+
+					let data = await response.json()
+
+					if (data){
+						console.log(data.message)
+						return true
+					}
+				}catch(error){console.log(error)}
+			}
 		},
 	};
 };

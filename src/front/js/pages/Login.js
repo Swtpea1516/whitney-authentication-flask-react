@@ -5,27 +5,27 @@ import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    console.log(email, password);
-    await actions.login(email, password);
+  const handleLogin = async () => {
+   
+    let result = await actions.login(email, password);
 
-    if (store.access_token && store.access_token !== "" && store.access_token !== undefined) {
+    if (result) {
       // Redirect to the private page
       navigate("/private");
     }
   };
 
-  console.log("Access Token:", store.access_token);
+  
 
 
   return (
-    <form >
+    <div className="urlBackground">
       <div className="loginPage">
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
@@ -59,6 +59,6 @@ export const Login = () => {
           Submit
         </button>
       </div>
-    </form>
+    </div>
   );
 };
