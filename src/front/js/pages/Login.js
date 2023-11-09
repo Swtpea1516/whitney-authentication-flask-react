@@ -9,6 +9,7 @@ export const Login = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -19,6 +20,7 @@ export const Login = () => {
       // Redirect to the private page
       navigate("/private");
     }
+    setIsLoggedIn(true);
   };
 
   

@@ -24,14 +24,30 @@
     
 }
 
-.signupPage {
+/* .signupPage {
 
    
     padding: 20px; 
     border-radius: 8px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
-    width: 400px; 
-    margin: 0 auto; 
+    width: 450px; 
+   margin-left:100px
+   
+    
+} */
+
+.signupPage {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 450px;
+    margin-left: 600px;
+}
+
+/* Add this style for stacking inputs */
+.signupPage input {
+    display: block;
+    margin-bottom: 10px;
 }
 
 .urlBackgroundSignup{

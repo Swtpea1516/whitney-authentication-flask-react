@@ -65,7 +65,7 @@ def get_user():
     else:
         return jsonify(message="User not found"), 404
 
-@api.route('/logout', methods=['POST'])
+@api.route('/logout', methods=['DELETE'])
 @jwt_required()
 def logout():
     return jsonify(message="Logged out successfully"), 200

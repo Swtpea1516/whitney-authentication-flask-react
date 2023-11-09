@@ -41,7 +41,7 @@ export const Signup = () => {
       <div className="signupPage">
         <h2>Sign Up</h2>
         <div >
-          <div className="mb-3">
+          <div className="emailBox">
             <label htmlFor="email">Email</label>
             <input
               type="email"
